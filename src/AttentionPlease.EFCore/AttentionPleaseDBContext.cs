@@ -5,27 +5,16 @@ namespace AttentionPlease.EFCore
 {
     public class AttentionPleaseDBContext : DbContext
     {
-        public static string DbConnectionString = "Server=localhost; Database=AttentionPleaseDb; Trusted_Connection=True;";
-
         public AttentionPleaseDBContext(DbContextOptions<AttentionPleaseDBContext> options)
             : base(options)
         { }
-
-        public AttentionPleaseDBContext()
-            : base(new DbContextOptionsBuilder<AttentionPleaseDBContext>().UseSqlServer(AttentionPleaseDBContext.DbConnectionString).Options)
-        {
-
-
-           // var optionsBuilder = ;
-        }
 
         public DbSet<Calendar> Calendars { get; set; }
 
         public DbSet<CalendarSubscriber> CalendarSubscribers { get; set; }
 
         public DbSet<AnniversaryCelebration> AnniversaryCelebrations { get; set; }
-
-
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
