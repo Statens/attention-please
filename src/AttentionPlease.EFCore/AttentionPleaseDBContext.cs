@@ -9,20 +9,31 @@ namespace AttentionPlease.EFCore
             : base(options)
         { }
 
+        public AttentionPleaseDBContext()
+            : base()
+        {
+
+        }
+
         public DbSet<Calendar> Calendars { get; set; }
 
-        public DbSet<CalendarSubscriber> CalendarSubscribers { get; set; }
+        public DbSet<CalendarSubscription> CalendarSubscribers { get; set; }
 
         public DbSet<AnniversaryCelebration> AnniversaryCelebrations { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(connectionString: "Server=localhost; Database=AttentionPleaseDb; Trusted_Connection=True;");
+            }
             base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Calendar>().HasData(new Calendar("Fam Jer"));
+            modelBuilder.Entity<CalendarSubscription>().HasOne(typeof(Calendar));
+            modelBuilder.Entity<Calendar>().HasData(new Calendar("Fam Jerndin"));
 
             //modelBuilder.Entity<Guest>().HasData(new Guest("Alper Ebicoglu", DateTime.Now.AddDays(-10)) { Id = 1 });
             //modelBuilder.Entity<Guest>().HasData(new Guest("George Michael", DateTime.Now.AddDays(-5)) { Id = 2 });

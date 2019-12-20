@@ -4,14 +4,16 @@ using AttentionPlease.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AttentionPlease.EFCore.Migrations
 {
     [DbContext(typeof(AttentionPleaseDBContext))]
-    partial class AttentionPleaseDBContextModelSnapshot : ModelSnapshot
+    [Migration("20191220071606_InitialCommit")]
+    partial class InitialCommit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,8 +52,8 @@ namespace AttentionPlease.EFCore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5381b378-34c8-459d-bea1-edee564ae727"),
-                            Name = "Fam Jerndin"
+                            Id = new Guid("e79fc143-bd39-4b58-9a4e-41c4fa480320"),
+                            Name = "Fam Jer"
                         });
                 });
 
