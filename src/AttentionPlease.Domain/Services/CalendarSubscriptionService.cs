@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Security.Claims;
 using AttentionPlease.Domain.Models;
 using AttentionPlease.Domain.Repositories;
 
@@ -24,9 +23,18 @@ namespace AttentionPlease.Domain.Services
             return subscriptions.Select(c => c.Calendar);
         }
         
-        public Calendar StoreCalendar(Calendar calendar)
-        {
-            return _calendarRepository.Save(calendar);
+        public Calendar CreateCalendar(string calendarName, ClaimsIdentity user)
+        {   
+            var calendar = new Calendar(name: calendarName);
+            
+            var sub = new CalendarSubscription
+            {
+                Calendar = calendar,
+                UserId = user.Name
+            };
+            return _calendarSubscriptionRepository.Save(sub).Calendar;
+
+            //return _calendarRepository.Save(calendar);
         }
     }
 }

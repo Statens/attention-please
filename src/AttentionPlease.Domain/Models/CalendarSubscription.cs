@@ -6,8 +6,6 @@
 
         public virtual Calendar Calendar { get; set; }
 
-        //public virtual Guid CalendarId { get; set; }
-
         public virtual string UserId { get; set; }
     }
 }

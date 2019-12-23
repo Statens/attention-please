@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using AttentionPlease.Domain.Models;
 using AttentionPlease.EFCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +12,7 @@ namespace AttentionPlease.Migrations.Console
         {
             // Example: dotnet run "AttentionPleaseDb:Provider=SqlServer" "ConnectionStrings:Storage=TheProdSettings"
 
-            IConfigurationRoot configuration = BuildConfig(args);
+            var configuration = BuildConfig(args);
 
             var connectionString1 = configuration.GetConnectionString("AttentionPleaseDb");
             var connectionString2 = configuration.GetValue<string>("AttentionPleaseDb:ConnectionString");
