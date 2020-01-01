@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AttentionPlease.Domain.Models
@@ -7,10 +8,10 @@ namespace AttentionPlease.Domain.Models
     {
         [Key]
         public virtual Guid Id { get; set; }
-
-        //public virtual int Id { get; set; }
-
+        
         public virtual string Name { get; set; }
+
+        public virtual List<AnniversaryCelebration> AnniversaryCelebrations { get; set; }
 
         public Calendar()
         {

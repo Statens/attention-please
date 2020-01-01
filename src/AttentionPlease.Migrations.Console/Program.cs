@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
 using AttentionPlease.EFCore;
+using AttentionPlease.Domain.Models;
+using AttentionPlease.Migrations.Console.Configuration;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 namespace AttentionPlease.Migrations.Console
@@ -10,56 +13,63 @@ namespace AttentionPlease.Migrations.Console
     {
         static void Main(string[] args)
         {
-            // Example: dotnet run "AttentionPleaseDb:Provider=SqlServer" "ConnectionStrings:Storage=TheProdSettings"
-
-            var configuration = BuildConfig(args);
-
-            var connectionString1 = configuration.GetConnectionString("AttentionPleaseDb");
-            var connectionString2 = configuration.GetValue<string>("AttentionPleaseDb:ConnectionString");
-
-            System.Console.WriteLine(connectionString1);
-            System.Console.WriteLine(connectionString2);
-            //System.Console.WriteLine(configuration.GetValue<string>("AttentionPleaseDb:ConnectionString"));
-            System.Console.WriteLine(configuration.GetValue<string>("AttentionPleaseDb:Provider"));
-
-            System.Console.WriteLine(configuration.GetValue<string>("AttentionPlease:Db:DbProvider"));
-
-            System.Console.WriteLine("Hello World!");
-
-            var optionsBuilder = new DbContextOptionsBuilder<AttentionPleaseDBContext>().UseSqlServer(connectionString1);
-
-            var context = new AttentionPleaseDBContext(optionsBuilder.Options);
+            IServiceCollection serviceCollection = new ServiceCollection().ConfigureServices(BuildConfig(args));
+            
+            // Create service provider
+            IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+            
+            using(var context = serviceProvider.GetService<AttentionPleaseDBContext>())
+            {
             System.Console.WriteLine("Run Database.Migrate()");
             context.Database.Migrate();
 
+            foreach (var c in context.CalendarSubscriptions)
+            {
+                context.CalendarSubscriptions.Remove(c);
+            }
             foreach (var contextCalendar in context.Calendars)
             {
-                System.Console.WriteLine(contextCalendar.Name);
+                context.Calendars.Remove(contextCalendar);
             }
-
-            // context.CalendarSubscribers.Add(new CalendarSubscription());
             context.SaveChanges();
+
+            var cal = new Calendar("Fam Jerndin");
+            var subscription = new CalendarSubscription{
+                UserId = "swizkon",
+                Calendar = cal
+            };
+            context.CalendarSubscriptions.Add(subscription);
+
+            // context.Calendars.Add();
+            context.SaveChanges();
+
+            foreach (var contextCalendar in context.Calendars)
+            { 
+                System.Console.WriteLine(contextCalendar.Name + ": " + contextCalendar.Id);
+            }
+            }
         }
 
-        static IConfigurationRoot BuildConfig(string[] args)
+        static IConfiguration BuildConfig(string[] args)
         {
-            var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
-
-            var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) ||
-                                devEnvironmentVariable.ToLower() == "development";
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables(prefix: "ATTENTION_PLEASE")
-                .AddCommandLine(args);
-
-            if (isDevelopment)
-            {
-                builder = builder.AddUserSecrets<Program>();
-            }
-
-            return builder.Build();
+            return ConfigurationExtentions.BuildConfiguration(Directory.GetCurrentDirectory(), args);
         }
     }
 }
+
+// sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=MyS3curep@ssW0rd" -p 1433:1433 --name sql1 -d mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+// Example: dotnet run "AttentionPleaseDb:Provider=SqlServer" "ConnectionStrings:Storage=TheProdSettings"
+
+// https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-bash
+
+
+
+/*
+# RUn migrations
+cd AttentionPlease.EFCore
+dotnet ef migrations add InitialCreate -s ../AttentionPlease.Migrations.Console/AttentionPlease.Migrations.Console.csproj
+
+dotnet ef database drop -s ../AttentionPlease.Migrations.Console/AttentionPlease.Migrations.Console.csproj
+
+dotnet ef migrations list -s ../AttentionPlease.Migrations.Console/AttentionPlease.Migrations.Console.csproj
+*/
