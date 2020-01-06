@@ -34,13 +34,13 @@ namespace AttentionPlease.Migrations.Console
             context.SaveChanges();
 
             var cal = new Calendar("Fam Jerndin");
-            var subscription = new CalendarSubscription{
+            var subscription = new CalendarSubscription
+            {
                 UserId = "swizkon",
                 Calendar = cal
             };
             context.CalendarSubscriptions.Add(subscription);
-
-            // context.Calendars.Add();
+            
             context.SaveChanges();
 
             foreach (var contextCalendar in context.Calendars)

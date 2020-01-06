@@ -45,9 +45,9 @@
 
             serviceCollection.AddSingleton<IConfiguration>(configuration);
 
-            var connectionString2 = configuration.GetValue<string>("AttentionPleaseDb:ConnectionString");
+            var connectionString = configuration.GetValue<string>("AttentionPleaseDb:ConnectionString");
 
-            var optionsBuilder = new DbContextOptionsBuilder<AttentionPleaseDBContext>().UseSqlServer(connectionString2);
+            var optionsBuilder = new DbContextOptionsBuilder<AttentionPleaseDBContext>().UseSqlServer(connectionString);
             
             var dbcontext = new AttentionPleaseDBContext(optionsBuilder.Options);
             

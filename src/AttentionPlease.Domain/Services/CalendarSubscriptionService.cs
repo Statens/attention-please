@@ -33,8 +33,6 @@ namespace AttentionPlease.Domain.Services
                 UserId = user.Name
             };
             return _calendarSubscriptionRepository.Save(sub).Calendar;
-
-            //return _calendarRepository.Save(calendar);
         }
     }
 }
