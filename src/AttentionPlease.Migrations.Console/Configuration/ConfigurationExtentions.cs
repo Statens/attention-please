@@ -2,10 +2,8 @@
 {
     using System;
     using AttentionPlease.EFCore;
-    using AttentionPlease.Domain.Models;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
     using Microsoft.EntityFrameworkCore;
 
     public static class ConfigurationExtentions
@@ -17,9 +15,12 @@
             var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) ||
                                 devEnvironmentVariable.ToLower() == "development";
 
+            Console.WriteLine(Environment.MachineName);
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(basePath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{Environment.MachineName}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables(prefix: "ATTENTION_PLEASE")
                 .AddCommandLine(args);
 

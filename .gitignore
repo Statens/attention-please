@@ -328,3 +328,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/src/AttentionPlease.Migrations.Console/appsettings.SE-PF159K13.json
