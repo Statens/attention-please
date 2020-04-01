@@ -6,7 +6,6 @@ namespace AttentionPlease.Domain.Models
 {
     public class Calendar
     {
-        [Key]
         public virtual Guid Id { get; set; }
         
         public virtual string Name { get; set; }

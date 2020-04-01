@@ -14,39 +14,41 @@ namespace AttentionPlease.Migrations.Console
         static void Main(string[] args)
         {
             IServiceCollection serviceCollection = new ServiceCollection().ConfigureServices(BuildConfig(args));
-            
+
             // Create service provider
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-            
-            using(var context = serviceProvider.GetService<AttentionPleaseDBContext>())
-            {
-            System.Console.WriteLine("Run Database.Migrate()");
-            context.Database.Migrate();
 
-            foreach (var c in context.CalendarSubscriptions)
+            using (var context = serviceProvider.GetService<AttentionPleaseDBContext>())
             {
-                context.CalendarSubscriptions.Remove(c);
-            }
-            foreach (var contextCalendar in context.Calendars)
-            {
-                context.Calendars.Remove(contextCalendar);
-            }
-            context.SaveChanges();
+                System.Console.WriteLine("Run Database.Migrate()");
+                context.Database.Migrate();
 
-            var cal = new Calendar("Fam Jerndin");
-            var subscription = new CalendarSubscription
-            {
-                UserId = "swizkon",
-                Calendar = cal
-            };
-            context.CalendarSubscriptions.Add(subscription);
-            
-            context.SaveChanges();
+                //foreach (var c in context.CalendarSubscriptions)
+                //{
+                //    context.CalendarSubscriptions.Remove(c);
+                //}
 
-            foreach (var contextCalendar in context.Calendars)
-            { 
-                System.Console.WriteLine(contextCalendar.Name + ": " + contextCalendar.Id);
-            }
+                //foreach (var contextCalendar in context.Calendars)
+                //{
+                //    context.Calendars.Remove(contextCalendar);
+                //}
+
+                //context.SaveChanges();
+
+                //var cal = new Calendar("Fam Jerndin");
+                //var subscription = new CalendarSubscription
+                //{
+                //    UserId = "swizkon",
+                //    Calendar = cal
+                //};
+                //context.CalendarSubscriptions.Add(subscription);
+
+                //context.SaveChanges();
+
+                foreach (var contextCalendar in context.Calendars)
+                {
+                    System.Console.WriteLine(contextCalendar.Name + ": " + contextCalendar.Id);
+                }
             }
         }
 
@@ -61,7 +63,6 @@ namespace AttentionPlease.Migrations.Console
 // Example: dotnet run "AttentionPleaseDb:Provider=SqlServer" "ConnectionStrings:Storage=TheProdSettings"
 
 // https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-bash
-
 
 
 /*
