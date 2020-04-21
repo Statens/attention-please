@@ -2,12 +2,14 @@
 
   import { onMount } from 'svelte';
 
-	export let name;
-	export let game;
+  export let name;
+  export let game;
 
   onMount(async () => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
+  const res = await fetch(`https://localhost:6001/api/celebrations`);
   const dasd = await res.json();
+  console.log(dasd[0]);
+  name = dasd[0].title;
   });
 
 </script>
