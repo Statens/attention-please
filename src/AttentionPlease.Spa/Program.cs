@@ -12,7 +12,7 @@ namespace AttentionPlease.Spa
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                 .UseWebRoot("svelte/public")
+                .UseWebRoot("svelte/public")
                 .UseStartup<Startup>();
     }
 }

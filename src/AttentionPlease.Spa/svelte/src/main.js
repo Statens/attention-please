@@ -5,7 +5,7 @@ const app = new App({
 	props: {
 		name: 'Master',
 		game: 'blaster the game'
-	}
+    }
 });
 
 export default app;

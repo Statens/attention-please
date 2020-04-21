@@ -1,6 +1,6 @@
 using System;
 
-namespace AttentionPlease.Spa
+namespace AttentionPlease.Spa.Models
 {
     public class WeatherForecast
     {
