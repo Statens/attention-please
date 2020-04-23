@@ -1,3 +1,6 @@
+using AttentionPlease.Domain.Repositories;
+using AttentionPlease.Domain.Services;
+using AttentionPlease.Spa.Infra;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +36,10 @@ namespace AttentionPlease.Spa
             {
                 configuration.RootPath = "svelte/public";
             });
+
+            services.AddSingleton<ICalendarRepository, InMemoryRepository>();
+            services.AddSingleton<ICalendarSubscriptionRepository, InMemoryRepository>();
+            services.AddScoped<CelebrationService>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

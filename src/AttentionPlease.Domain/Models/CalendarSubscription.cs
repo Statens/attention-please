@@ -1,10 +1,13 @@
-﻿namespace AttentionPlease.Domain.Models
-{
-    public class CalendarSubscription
-    {
-        public virtual int Id { get; set; }
+﻿using System;
+using AttentionPlease.Domain.Repositories;
 
-        public virtual Calendar Calendar { get; set; }
+namespace AttentionPlease.Domain.Models
+{
+    public class CalendarSubscription : IAggregate
+    {
+        public virtual Guid Id { get; set; }
+
+        public virtual Guid CalendarId { get; set; }
 
         public virtual string UserId { get; set; }
     }

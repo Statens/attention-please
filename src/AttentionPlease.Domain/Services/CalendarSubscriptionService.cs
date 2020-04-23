@@ -20,19 +20,22 @@ namespace AttentionPlease.Domain.Services
         public IEnumerable<Calendar> GetCalendarsByUser(string user)
         {
             var subscriptions = _calendarSubscriptionRepository.GetByUser(user);
-            return subscriptions.Select(c => c.Calendar);
+            return _calendarRepository.GetByIds(subscriptions.Select(x => x.CalendarId));
+            // return subscriptions.Select(c => c.Calendar);
         }
         
         public Calendar CreateCalendar(string calendarName, ClaimsIdentity user)
         {   
             var calendar = new Calendar(name: calendarName);
             
-            var sub = new CalendarSubscription
+            var subscription = new CalendarSubscription
             {
-                Calendar = calendar,
+                CalendarId = calendar.Id,
                 UserId = user.Name
             };
-            return _calendarSubscriptionRepository.Save(sub).Calendar;
+
+            _calendarSubscriptionRepository.Save(subscription);
+            return _calendarRepository.Save(calendar);
         }
     }
 }

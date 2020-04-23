@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AttentionPlease.Domain.Models;
+using AttentionPlease.Domain.Repositories;
 using AttentionPlease.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,23 +10,26 @@ namespace AttentionPlease.Spa.Api
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CelebrationsController : ControllerBase
+    public class CalendarController : ControllerBase
     {
-        private readonly ILogger<CelebrationsController> _logger;
         private readonly CelebrationService _celebrationService;
+        private readonly ILogger<CalendarController> _logger;
 
-        public CelebrationsController(
+        public CalendarController(
             CelebrationService celebrationService,
-            ILogger<CelebrationsController> logger)
+            ILogger<CalendarController> logger)
         {
             _celebrationService = celebrationService;
             _logger = logger;
         }
 
         [HttpGet]
-        public IEnumerable<Celebration> Get()
+        public IEnumerable<Calendar> List()
         {
-            return _celebrationService.AllCelebrations();
+            _logger.LogDebug(GetType().Name);
+
+            return _celebrationService.Calendars();
+
         }
     }
 }
