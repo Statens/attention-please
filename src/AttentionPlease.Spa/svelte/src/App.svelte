@@ -4,14 +4,16 @@
   import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
   let connection = new HubConnectionBuilder()
-  .withUrl("/chat")
+  .withUrl("https://localhost:6001/signalr")
   .build();
 
   connection
   .start()
   .then(() => console.log('Connection started!'))
   .catch(err => console.log('Error while establishing connection :('));
-
+  connection.on('BroadcastMessage', (data) => {
+    console.log(data)
+  });
 
   export let name;
   export let game;

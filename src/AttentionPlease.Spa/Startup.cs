@@ -1,6 +1,8 @@
+using System;
 using AttentionPlease.Domain.Repositories;
 using AttentionPlease.Domain.Services;
 using AttentionPlease.Spa.Infra;
+using AttentionPlease.Spa.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,11 +27,13 @@ namespace AttentionPlease.Spa
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
-                builder
-                    .AllowAnyMethod()
+                builder.AllowAnyMethod()
                     .AllowAnyHeader()
+                    .AllowCredentials()
                     .WithOrigins("http://localhost:5000");
             }));
+
+            services.AddSignalR(options => { options.KeepAliveInterval = TimeSpan.FromSeconds(5); }).AddMessagePackProtocol();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -58,11 +62,13 @@ namespace AttentionPlease.Spa
             app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
-
+            
             app.UseRouting();
-
+            
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<SignalrHub>("/signalr");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
