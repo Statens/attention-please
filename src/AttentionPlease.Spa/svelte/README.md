@@ -91,3 +91,21 @@ Then, from within your project folder:
 npm run build
 surge public my-project.surge.sh
 ```
+
+
+## LInks and stuff
+
+### SignalR MessagePack and react/Svelte
+https://medium.com/@chris.stephan1996/why-when-and-how-and-to-use-signalr-ef49b5b0dc11
+
+https://docs.microsoft.com/sv-se/javascript/api/@aspnet/signalr/?view=signalr-js-latest
+https://docs.microsoft.com/sv-se/javascript/api/@aspnet/signalr/hubconnectionbuilder?view=signalr-js-latest
+
+
+### Phoenix and Elixir
+
+https://phxchat.herokuapp.com/
+
+https://elixirforum.com/t/elixir-on-microsoft-azure/16537
+
+https://github.com/chgeuer/ex_microsoft_azure_storage/blob/master/lib/microsoft/azure/storage/queue.ex
