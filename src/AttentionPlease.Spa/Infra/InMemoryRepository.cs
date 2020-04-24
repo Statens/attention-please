@@ -17,6 +17,9 @@ namespace AttentionPlease.Spa.Infra
             {
                 Celebration.Birthday(DateTime.Parse("2015-02-22T22:11:00.000Z"), "Signe큦 birthday"),
                 Celebration.Birthday(DateTime.Parse("2009-04-04T03:42:00.000Z"), "Desmond큦 birthday"),
+                Celebration.Birthday(DateTime.Parse("1980-06-01T08:00:00.000Z"), "Jenny큦 birthday"),
+                Celebration.Birthday(DateTime.Parse("1980-05-16T12:00:00.000Z"), "Jonas큦 birthday"),
+
                 new Celebration
                 (
                     DateTime.Parse("2005-07-03T18:15:00.000Z"),
@@ -27,16 +30,7 @@ namespace AttentionPlease.Spa.Infra
                     DateTime.Parse("2011-11-05T18:00:00.000Z"),
                     "J+J wedding day",
                     CelebrationType.WeddingDay
-                ),
-                new Celebration(
-                    DateTime.Parse("1980-06-01T08:00:00.000Z"),
-                  "Jenny큦 birthday",
-                 CelebrationType.Birthday),
-                new Celebration(
-                   DateTime.Parse("1980-05-16T12:00:00.000Z"),
-                 "Jonas큦 birthday",
-                  CelebrationType.Birthday
-                    )
+                )
             };
 
             var calendar = new Calendar("Fam Jerndin") {Celebrations = celebrations.ToList()};

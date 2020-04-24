@@ -1,6 +1,17 @@
 <script>
 
   import { onMount } from 'svelte';
+  import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+
+  let connection = new HubConnectionBuilder()
+  .withUrl("/chat")
+  .build();
+
+  connection
+  .start()
+  .then(() => console.log('Connection started!'))
+  .catch(err => console.log('Error while establishing connection :('));
+
 
   export let name;
   export let game;
@@ -23,7 +34,7 @@
 <style>
 	main {
 		text-align: center;
-		padding: 1em;
+		padding: 1em; 
 		max-width: 250px;
 		margin: 0 auto;
 	}
