@@ -15,10 +15,10 @@ namespace AttentionPlease.Spa.Infra
         {
             var celebrations = new[]
             {
-                Celebration.Birthday(DateTime.Parse("2015-02-22T22:11:00.000Z"), "Signe큦 birthday"),
-                Celebration.Birthday(DateTime.Parse("2009-04-04T03:42:00.000Z"), "Desmond큦 birthday"),
-                Celebration.Birthday(DateTime.Parse("1980-06-01T08:00:00.000Z"), "Jenny큦 birthday"),
-                Celebration.Birthday(DateTime.Parse("1980-05-16T12:00:00.000Z"), "Jonas큦 birthday"),
+                Celebration.Birthday(DateTime.Parse("2015-02-22T22:11:00.000Z"), "Signes birthday"),
+                Celebration.Birthday(DateTime.Parse("2009-04-04T03:42:00.000Z"), "Desmonds birthday"),
+                Celebration.Birthday(DateTime.Parse("1980-06-01T08:00:00.000Z"), "Jennys birthday"),
+                Celebration.Birthday(DateTime.Parse("1980-05-16T12:00:00.000Z"), "Jonases birthday"),
 
                 new Celebration
                 (
