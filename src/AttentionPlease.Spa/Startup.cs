@@ -1,4 +1,5 @@
 using System;
+using Api.Extensions;
 using AttentionPlease.Domain.Repositories;
 using AttentionPlease.Domain.Services;
 using AttentionPlease.Spa.Infra;
@@ -23,6 +24,8 @@ namespace AttentionPlease.Spa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOpenApiConfiguration(Configuration);
+            
             services.AddControllersWithViews();
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
@@ -51,6 +54,7 @@ namespace AttentionPlease.Spa
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseOpenApi();
             }
             else
             {

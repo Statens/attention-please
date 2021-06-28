@@ -20,12 +20,16 @@
   export let game;
 
   let celebrations = [];
+  let nextUp;
+
+  let messages = [];
 
   onMount(async () => {
     const res = await fetch(`https://localhost:6001/api/celebrations`);
     const dasd = await res.json();
-    console.log(dasd[0]);
+
     celebrations = dasd;
+    nextUp = celebrations.shift();
     name = dasd[0].title;
   });
 </script>
@@ -53,14 +57,27 @@
 </style>
 
 <main>
-  <h1>allå, allå!</h1>
-  <h2>I got {game} {name}!</h2>
-  <div>
 
+  <div class="jumbotron">
+    <h2>Allå, allå</h2>
+    {#if nextUp != null}
+      <h1 id="next-title">{nextUp.title}</h1>
+      <h2>{nextUp.description}</h2>
+      <h3 id="num-days">{nextUp.nextOccurrence}</h3>
+    {:else}
+      <p>Loading...</p>
+      <h1 id="next-title">Loading...</h1>
+    {/if}
+  </div>
+
+  <h3>Future:</h3>
+
+  <div>
     <ul>
       {#each celebrations as celebration}
         <li>
-            {celebration.title}
+          {celebration.title} {celebration.description}
+          {celebration.nextOccurrence}
         </li>
       {/each}
     </ul>
