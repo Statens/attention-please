@@ -1,10 +1,9 @@
 <script>
-  import jwtDecode from "jwt-decode";
   import { onMount } from "svelte";
-  import { HubConnection, HubConnectionBuilder } from "@aspnet/signalr";
-  import { timer } from 'rxjs';
-  
-  let tick = timer(0, 1000);
+  import { HubConnectionBuilder } from "@aspnet/signalr";
+  import { timer } from "rxjs";
+
+  import Login from "./components/Login.svelte";
 
   let connection = new HubConnectionBuilder()
     .withUrl("https://localhost:6001/signalr")
@@ -39,50 +38,16 @@
     name = dasd[0].title;
   });
 
-  window.onSignIn = (googleUser) => {
-    console.log("googleUser", googleUser);
 
-    var jwt = jwtDecode(googleUser.credential);
+  const handleLogin = (evt) => {
+    console.log('handleLogin', evt);
+    user = evt.detail;
+  }
 
-    user = {
-      name: jwt.name,
-      picture: jwt.picture,
-      token: googleUser.credential,
-    };
-  };
 </script>
 
-<svelte:head>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-</svelte:head>
-
 <main>
-  <div
-    id="g_id_onload"
-    data-client_id="1057072569039-sieh4mh26jtbbl2djnmt8o9fievuhl18.apps.googleusercontent.com"
-    data-context="signin"
-    data-ux_mode="popup"
-    data-callback="onSignIn"
-    data-auto_prompt="false"
-  />
-
-  <div class="jumbotron">
-  { $tick }
-    {#if user == null}
-      <div
-        class="g_id_signin"
-        data-type="standard"
-        data-shape="rectangular"
-        data-theme="outline"
-        data-text="signin_with"
-        data-size="medium"
-        data-logo_alignment="right"
-      />
-    {:else}
-      <img class="rounded" src="{user.picture}" alt="{user.picture}" />
-      <p>{user.name}</p>
-    {/if}
-  </div>
+  <Login on:login={handleLogin} />
 
   <div class="jumbotron">
     <h2>Allå, allå</h2>
