@@ -2,6 +2,9 @@
   import jwtDecode from "jwt-decode";
   import { onMount } from "svelte";
   import { HubConnection, HubConnectionBuilder } from "@aspnet/signalr";
+  import { timer } from 'rxjs';
+  
+  let tick = timer(0, 1000);
 
   let connection = new HubConnectionBuilder()
     .withUrl("https://localhost:6001/signalr")
@@ -64,6 +67,7 @@
   />
 
   <div class="jumbotron">
+  { $tick }
     {#if user == null}
       <div
         class="g_id_signin"
